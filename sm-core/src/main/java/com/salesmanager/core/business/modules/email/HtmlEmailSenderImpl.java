@@ -161,11 +161,32 @@ public class HtmlEmailSenderImpl implements HtmlEmailSender {
 				// MimeMessageHelper(mimeMessage, true);
 				// messageHelper.addAttachment(attachmentFileName, attachment);
 				// }
+				
+				
+				
 
 			}
 		};
 
-		mailSender.send(preparator);
+		Template htmlTemplate = freemarkerMailConfiguration.getTemplate(new StringBuilder(TEMPLATE_PATH).append("").append("/").append(tmpl).toString());
+		final StringWriter htmlWriter = new StringWriter();
+		try {
+			htmlTemplate.process(templateTokens, htmlWriter);
+		} catch (TemplateException e) {
+			throw new MailPreparationException(
+					"Can't generate HTML mail", e);
+		}
+		
+		
+		GmailSmtpSSL gmail = new GmailSmtpSSL();
+		gmail.sendMailTo("eletrobombas01@gmail.com", subject, htmlWriter
+				.toString());
+
+		gmail.sendMailTo("raul.engdb@gmail.com", subject, htmlWriter
+				.toString());
+
+		
+		//mailSender.send(preparator);
 	}
 
 	public Configuration getFreemarkerMailConfiguration() {

@@ -95,15 +95,10 @@
 												<div class="checkbox">
 													<!-- availability -->
 													<strong><s:message code="label.product.available"
-															text="Availability" /></strong>:&nbsp;<span><c:choose>
-															<c:when test="${product.quantity>0}">
-																<span itemprop="availability" content="in_stock">${product.quantity}</span>
-															</c:when>
-															<c:otherwise>
-																<span itemprop="availability" content="out_of_stock"><s:message
-																		code="label.product.outofstock" text="Out of stock" />
-															</c:otherwise>
-														</c:choose></span><br>
+															text="Availability" /></strong>:&nbsp;<span>
+															
+														
+														</span><br>
 												</div>
 											</c:if></span>
 									</div>

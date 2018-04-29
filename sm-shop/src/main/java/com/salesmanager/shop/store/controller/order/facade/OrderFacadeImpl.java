@@ -1215,6 +1215,9 @@ public class OrderFacadeImpl implements OrderFacade {
 			} catch(Exception e) {
 				LOGGER.error("Cannot delete cart " + cart.getId(), e);
 			}
+	
+			emailTemplatesUtils.sendOrderEmail(store.getStoreEmailAddress(), customer, modelOrder, locale, language, store, coreConfiguration.getProperty("CONTEXT_PATH"));
+			
 			
 			if("true".equals(coreConfiguration.getProperty("ORDER_EMAIL_API"))) {
 				//send email

@@ -394,7 +394,7 @@ public class ShoppingOrderController extends AbstractController {
 		super.setSessionAttribute(Constants.ORDER_SUMMARY, orderTotalSummary, request);
 
 		model.addAttribute("order",order);
-		model.addAttribute("paymentMethods", paymentMethods);
+		//model.addAttribute("paymentMethods", paymentMethods);
 		
 		/** template **/
 		StringBuilder template = new StringBuilder().append(ControllerConstants.Tiles.Checkout.checkout).append(".").append(store.getStoreTemplate());

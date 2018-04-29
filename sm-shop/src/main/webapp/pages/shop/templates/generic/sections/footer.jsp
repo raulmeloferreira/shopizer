@@ -129,7 +129,7 @@ response.setDateHeader ("Expires", -1);
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 						<c:if test="${requestScope.CONFIGS['allowPurchaseItems'] == true}">
 						<div class="copyright-img text-right">
-							<img src="/resources/img/payment/icons/MasterCard.png" width="50" alt="" />&nbsp;<img src="/resources/img/payment/icons/Visa.png" width="50" alt="" />&nbsp;<img src="/resources/img/payment/icons/AmericanExpress.png" width="50" alt="" />&nbsp;<img src="/resources/img/payment/icons/PayPal.png" width="50" alt="" />
+							<img src="/resources/img/payment/icons/MasterCard.png" width="50" alt="" />&nbsp;<img src="/resources/img/payment/icons/Visa.png" width="50" alt="" />&nbsp;<img src="/resources/img/payment/icons/AmericanExpress.png" width="50" alt="" />&nbsp;
 						</div>
 						</c:if>
 					</div>
