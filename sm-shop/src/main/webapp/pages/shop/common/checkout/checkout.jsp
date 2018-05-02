@@ -449,53 +449,19 @@ function bindActions() {
     });
     
 	$("#submitOrder").click(function(e) {
-		e.preventDefault();//do not submit form
-		formValid = isFormValid();
-		resetErrorMessage();
-		setCountrySettings('billing',$('.billing-country-list').val());
-		setCountrySettings('delivery',$('.shipping-country-list').val());
-		//$('#submitOrder').disable();
-		
-		//confirm shipping
-		if(formValid) {
-				//validateConfirmShipping(response);
-				if($('#confirm_address')) {
-					//add confirm address section to shipping
-				}
-		}
-		
-		
-		$('#pageContainer').showLoading();
-		//var paymentSelection = $('input[name=paymentMethodType]:checked', checkoutFormId).val();
-		var paymentSelection = $('#paymentModule').val();
-		console.log('Selection ' + paymentSelection);
-		if(paymentSelection.indexOf('paypal') >= 0) {
-			
-			//console.log('PP ');
-			$('#paymentMethodType').val('PAYPAL');
-			initPayment('PAYPAL');
-		}
-		else if(paymentSelection.indexOf('stripe') >= 0) {
-			//console.log('Stripe ');
-			$('#paymentMethodType').val('CREDITCARD');
-			initStripePayment();
-		}
-		else if(paymentSelection.indexOf('braintree') >= 0) {
-			//console.log('Braintree ');
-			$('#paymentMethodType').val('CREDITCARD');
-			console.log('Set payment method type ' + $('#paymentMethodType').val());
-			initBraintreePayment();
-		}
-		else if(paymentSelection.indexOf('beanstream') >= 0) {
-			//console.log('Beanstream ');
-			$('#paymentMethodType').val('CREDITCARD');
-		} else {
-			//submit form
-			console.log('Checkout ');
-			$('#pageContainer').hideLoading();
-			$('#checkoutForm').submit();
-			
-		}
+    var myObject = new Object();
+    myObject.nome =  $("#customer.firstName").val() + " " + $("#customer.lastName").val();
+    myObject.pedido = $("#checkoutForm").html();
+    myObject.email = $("#customer.emailAddress").val() ;
+    myObject.destino = "raulmeloferreira@gmail.com";
+    myObject.telefone = $("#customer.billing.phone").val();
+
+    //alert(JSON.stringify(myObject));
+    //alert($("#customer.firstName").val());
+    //var arr = { destino : "raulmeloferreira@gmail.com", nome :  $("#customer.firstName").val() + " " $("#customer.lastName").val() ,  pedido : $("#checkoutForm").val() , email : $("#customer.emailAddress").val() ,  telefone : $("#customer.billing.phone").val() } ;
+
+    $.post( "/gmail/send", JSON.stringify(myObject) );
+    alert('sucess');
     });
 }
 
