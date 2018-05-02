@@ -178,15 +178,15 @@ public class HtmlEmailSenderImpl implements HtmlEmailSender {
 		}
 		
 		
-		GmailSmtpSSL gmail = new GmailSmtpSSL();
-		gmail.sendMailTo("eletrobombas01@gmail.com", subject, htmlWriter
-				.toString());
+		//GmailSmtpSSL gmail = new GmailSmtpSSL();
+		//gmail.sendMailTo("eletrobombas01@gmail.com", subject, htmlWriter
+		//		.toString());
 
-		gmail.sendMailTo("raul.engdb@gmail.com", subject, htmlWriter
-				.toString());
+		//gmail.sendMailTo("raul.engdb@gmail.com", subject, htmlWriter
+		//		.toString());
 
 		
-		//mailSender.send(preparator);
+		mailSender.send(preparator);
 	}
 
 	public Configuration getFreemarkerMailConfiguration() {

@@ -13,9 +13,22 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class GmailSmtpSSL {
 
-    GmailSmtpSSL() {
+    public GmailSmtpSSL() {
         usern = "eletrobombas02";
         pass  = "KARHER28111";
 
@@ -71,8 +84,9 @@ public class GmailSmtpSSL {
              message.setFrom(new InternetAddress(usern));
              message.setRecipients(Message.RecipientType.TO, 
                                                     InternetAddress.parse(to));
-             message.setSubject("PinguBot: "+dateToday+" "+sub);
-             message.setText(body);
+             message.setSubject(sub);
+             message.setContent(body, "text/html; charset=utf-8");
+             //message.setText(body);
              setDebugMsg("Attempting to send...");
              Transport transport = session.getTransport("smtps");
 
@@ -115,8 +129,9 @@ public class GmailSmtpSSL {
     
     public static void main(String[] args) throws MessagingException {
 		GmailSmtpSSL teste = new GmailSmtpSSL();
-		teste.sendMailTo("raulmeloferreira@gmail.com", "teste", "teste");
+		teste.sendMailTo("raulmeloferreira@gmail.com", "Pedido de joao joao@joao.com 4545-4545", "<html><body><b>teste</b></body></html>");
+		
 	}
     
-
 }
+    

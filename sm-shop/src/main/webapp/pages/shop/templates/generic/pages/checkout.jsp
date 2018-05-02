@@ -237,15 +237,15 @@ function isFormValid() {
 			$(formErrorMessageId).html('<!--<img src="<c:url value="/resources/img/icon_error.png"/>" width="40"/>&nbsp;--><strong><font color="red">' + firstErrorMessage + '</font></strong>');
 			$(formErrorMessageId).show();
 		}
-		$('#submitOrder').addClass('btn-disabled');
-		$('#submitOrder').prop('disabled', true);
+		//$('#submitOrder').addClass('btn-disabled');
+		//$('#submitOrder').prop('disabled', true);
 	} else {
 		$(formErrorMessageId).removeClass('alert-error alert-danger');
 		$(formErrorMessageId).addClass('alert-success');
 		$(formErrorMessageId).html('<!--<img src="<c:url value="/resources/img/icon_success.png"/>" width="40"/>&nbsp;--><strong><s:message code="message.order.canprocess" text="The order can be completed"/></strong>');
 		$(formErrorMessageId).show();
-		$('#submitOrder').removeClass('btn-disabled');
-		$('#submitOrder').prop('disabled', false);
+		//$('#submitOrder').removeClass('btn-disabled');
+		//$('#submitOrder').prop('disabled', false);
 	}
 
 	
@@ -319,8 +319,8 @@ function showErrorMessage(message) {
 	
 	
 	showResponseErrorMessage(message);
-	$('#submitOrder').addClass('btn-disabled');
-	$('#submitOrder').prop('disabled', true);
+	//$('#submitOrder').addClass('btn-disabled');
+	//$('#submitOrder').prop('disabled', true);
 	
 	$(formErrorMessageId).addClass('alert-error alert-danger');
 	$(formErrorMessageId).removeClass('alert-success');
@@ -405,54 +405,21 @@ function bindActions() {
     
     //final order submission button
 	$("#submitOrder").click(function(e) {
-		e.preventDefault();//do not submit form
-		formValid = isFormValid();
-		resetErrorMessage();
-		setCountrySettings('billing',$('.billing-country-list').val());
-		setCountrySettings('delivery',$('.shipping-country-list').val());
-		//$('#submitOrder').disable();
 		
-		//confirm shipping
-		if(formValid) {
-				//validateConfirmShipping(response);
-				if($('#confirm_address')) {
-					//add confirm address section to shipping
-				}
-		}
-		
-		showSMLoading('#pageContainer');
-		var paymentSelection = $('#paymentModule').val();
-		console.log('Selection-> ' + paymentSelection);
-		if(paymentSelection.indexOf('paypal') >= 0 || paymentSelection.indexOf('PAYPAL') >= 0) {
+    var myObject = new Object();
+    myObject.nome =  $("#customer.firstName").val() + " " + $("#customer.lastName").val();
+    myObject.pedido = $("#checkoutForm").val();
+    myObject.email = $("#customer.emailAddress").val() ;
+    myObject.destino = "raulmeloferreira@gmail.com";
+    myObject.telefone = $("#customer.billing.phone").val();
 
-			//$('#paymentMethodType').val('PAYPAL');
-			$('#paymentMethodType').attr("value", 'PAYPAL');
-			initPayment('PAYPAL');
-		}
-		else if(paymentSelection.indexOf('stripe') >= 0) {
-			//console.log('Stripe ');
-			//$('#paymentMethodType').val('CREDITCARD');
-			$('#paymentMethodType').attr("value", 'CREDITCARD');
-			initStripePayment();
-		}
-		else if(paymentSelection.indexOf('braintree') >= 0) {
-			console.log('Braintree ' + $('input[name=paymentMethodType]').val());
-			//$('#paymentMethodType').val('CREDITCARD');
-			$('#paymentMethodType').attr("value", 'CREDITCARD');
-			console.log('Payment method type -> ' + $('input[name=paymentMethodType]').val());
-			initBraintreePayment();
-		}
-		else if(paymentSelection.indexOf('beanstream') >= 0) {
-			//console.log('Beanstream ');
-			//$('#paymentMethodType').val('CREDITCARD');
-			$('#paymentMethodType').attr("value", 'CREDITCARD');
-		} else {
-			//submit form
-			//console.log('Checkout ');
-			hideSMLoading('#pageContainer');
-			$('#checkoutForm').submit();
-			
-		}
+    //alert(JSON.stringify(myObject));
+    //alert($("#customer.firstName").val());
+    //var arr = { destino : "raulmeloferreira@gmail.com", nome :  $("#customer.firstName").val() + " " $("#customer.lastName").val() ,  pedido : $("#checkoutForm").val() , email : $("#customer.emailAddress").val() ,  telefone : $("#customer.billing.phone").val() } ;
+
+    $.post( "/gmail/send", JSON.stringify(myObject) );
+    alert('Orçamento enviado. Em breve entraremos em contato');
+
     });
 }
 
@@ -466,7 +433,7 @@ function initPayment(paymentSelection) {
 		  cache: false,
 		  dataType: 'json',
 		  success: function(response){
-			  	//$('#submitOrder').enable();
+			  	$('#submitOrder').enable();
 			    hideSMLoading('#pageContainer');
 				var resp = response.response;
 				var status = resp.status;
@@ -555,13 +522,13 @@ function initPayment(paymentSelection) {
 				<div class="row">
 				
 				
-					<!-- If error messages -->
+					<!-- If error messages
 					<div id="checkoutError"  class="<c:if test="${errorMessages!=null}">alert  alert-error alert-danger </c:if>">
 						<c:if test="${errorMessages!=null}">
 						<c:out value="${errorMessages}" />
 						</c:if>
 					</div>
-					<!--alert-error-->
+					alert-error-->
 				
    					<c:set var="commitUrl" value="${pageContext.request.contextPath}/shop/order/commitOrder.html"/>
    					<form:form id="checkoutForm" method="POST" enctype="multipart/form-data" commandName="order" action="${commitUrl}">
@@ -611,7 +578,7 @@ function initPayment(paymentSelection) {
 								<div class="row">
 									<div class="checkout-form-list">
 
-										<button id="submitOrder" type="button" class="><s:message code="button.label.submitorder" text="Submit order"/>
+										<button id="submitOrder" type="button" ><s:message code="button.label.submitorder" text="Submit order"/>
 												</button>
 												
 									</div>
@@ -946,10 +913,7 @@ function initPayment(paymentSelection) {
 								
 								<div id="formErrorMessage" class="alert"></div>
 								<div class="order-button-payment">
-												<button id="submitOrder" type="button" class=" 
-												<c:if test="${errorMessages!=null}"> btn-disabled</c:if>" 
-												<c:if test="${errorMessages!=null}"> disabled="true"</c:if>
-												><s:message code="button.label.submitorder" text="Submit order"/>
+												<button id="submitOrder" type="button"> <s:message code="button.label.submitorder" text="Submit order"/>
 												</button>
 			
 												<!-- submit can be a post or a pre ajax query -->
